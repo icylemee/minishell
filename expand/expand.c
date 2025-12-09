@@ -6,7 +6,7 @@
 /*   By: mlemee <mlemee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 22:25:54 by mlemee            #+#    #+#             */
-/*   Updated: 2025/12/09 21:00:15 by mlemee           ###   ########.fr       */
+/*   Updated: 2025/12/09 21:07:13 by mlemee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*ft_fill_new_after_expand(t_token *token, t_env2 *env, int len)
 			free(key);
 			free(val);
 		}
-		else 
+		else
 		{
 			new[j] = token->content[i];
 			i++;
@@ -131,6 +131,14 @@ char	*ft_fill_key_expand(char *str, int len)
 	return (key);
 }
 
+int	ft_is_key(char c)
+{
+	if (ft_isalnum(c) == 1)
+		return (1);
+	if (c == '_' || c == '?')
+		return (1);
+	return (0);
+}
 
 int	ft_expand_token(t_token	*token, t_env2	*env)
 {
@@ -149,7 +157,7 @@ int	ft_expand_token(t_token	*token, t_env2	*env)
 	while (token->content[i])
 	{
 		if (token->content[i] == '$' && token->state != SINGLE_QUOTE_T
-			&& (ft_isalnum(token->content[i + 1]) || token->content[i + 1] == '_' || token->content[i + 1] == '?'))
+			&& (ft_is_key(token->content[i + 1])))
 		{
 			i++;
 			key = ft_fill_key_expand(&token->content[i], ft_var_len(&token->content[i]));
