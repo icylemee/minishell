@@ -6,7 +6,7 @@
 /*   By: mlemee <mlemee@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/08 22:25:54 by mlemee            #+#    #+#             */
-/*   Updated: 2025/12/09 21:07:13 by mlemee           ###   ########.fr       */
+/*   Updated: 2025/12/09 21:09:19 by mlemee           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,10 +181,7 @@ int	ft_expand_token(t_token	*token, t_env2	*env)
 	if (!new)
 		return (0);
 	free(token->content);
-	token->content = ft_strdup(new);
-	if (!token->content)
-		return (0);
-	free(new);
+	token->content = new;
 	return (1);
 }
 
