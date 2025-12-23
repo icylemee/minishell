@@ -22,7 +22,6 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
-# include <sys/wait.h>
 # include <unistd.h>
 
 // Librairies parsing
@@ -45,6 +44,7 @@
 
 
 typedef struct s_env	t_env2;
+typedef struct s_cmd	t_cmd;
 extern volatile sig_atomic_t	g_signal;
 
 typedef struct s_env
@@ -82,6 +82,23 @@ typedef struct s_token
 	struct s_token	*prev;
 }				t_token;
 
+typedef struct s_redir
+{
+	char			*path;
+	t_token_type	type;
+	struct	s_redir	*next;
+}				t_redir;	
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	struct s_cmd	*next;
+	t_redir			*redir;
+	pid_t			pid;
+}				t_cmd;
+
+
+
 
 //GESTION CREATION LISTE ENVIRONNEMENT 
 t_env2	*ft_create_list_env(char **env);
@@ -114,11 +131,16 @@ void	ft_lstclear_token(t_token **lst);
 
 // GESTION EXPAND 
 char	*ft_getenv(char *key, t_env2 *env);
-
-
-
-
-
+char	*ft_get_var_value(char *key, t_env2 *env);
+int		ft_isalnum(int c);
+int		ft_var_len(char *str);
+char	*ft_fill_new_after_expand(t_token *token, t_env2 *env, int len);
+char	*ft_fill_key_expand(char *str, int len);
+int		ft_is_key(char c);
+int		ft_expand_token(t_token	*token, t_env2	*env);
+int 	ft_expander(t_token **start, t_env2 *env);
+int		ft_check_prev_type(t_token *token);
+int 	ft_is_dollar(char *content);
 
 
 
@@ -128,7 +150,7 @@ int		ft_append_token(t_token **start, char *word,
 			t_token_type type, t_quote_state state);
 char	*ft_strdup(const char *s);
 
-static char	*ft_strcpy(char *dest, const char *src);
+// static char	*ft_strcpy(char *dest, const char *src);
 
 void	error_malloc(void);
 void	ft_putendl_fd(char *s, int fd);

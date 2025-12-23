@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+#include "../minishell.h"
 
 static char	*ft_strcpy(char *dest, const char *src)
 {

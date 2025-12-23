@@ -27,6 +27,50 @@ void	print_env_list(t_env2 *env)
 	}
 }
 
+void debug_print_tokens(t_token *tokens)
+{
+	if (!tokens)
+		return ;
+	printf("\n--- VISUALISATION DES TOKENS ---\n");
+	while (tokens)
+	{
+		printf("[TOKEN] Content: '%s' | Type: %d | Quote: %d\n", 
+				tokens->content, tokens->type, tokens->state);
+		tokens = tokens->next;
+	}
+	printf("--------------------------------\n\n");
+}
+
+void ft_lstclear_token3(t_token **lst)
+{
+    t_token *current;
+    t_token *next_node;
+
+    // Sécurité : si la liste n'existe pas, on ne fait rien
+    if (!lst)
+        return ;
+    
+    current = *lst;
+    while (current)
+    {
+        // 1. IMPORTANT : On sauvegarde l'adresse du suivant AVANT de détruire l'actuel
+        next_node = current->next;
+
+        // 2. On libère la string à l'intérieur (le content)
+        if (current->content)
+            free(current->content);
+
+        // 3. On libère le maillon lui-même (la structure)
+        free(current);
+
+        // 4. On passe au suivant qu'on avait sauvegardé
+        current = next_node;
+    }
+    
+    // Bonne pratique : on met le pointeur de départ à NULL pour éviter les "dangling pointers"
+    *lst = NULL;
+}
+
 int	main(int argc, char **argv, char **env)
 {
 	char	*line;
@@ -60,6 +104,15 @@ int	main(int argc, char **argv, char **env)
 		tokens = ft_create_list_tokens(line);
 		if (!tokens)
 			return (-1);
+		if (ft_expander(&tokens, my_env) == 0)
+			return (-1);
+		if (ft_remove_quote(&tokens) == -1)
+			return (-1);
+
+		//print tokens pour voir si expand fonctionne
+		debug_print_tokens(tokens);
+		ft_lstclear_token3(&tokens);
+		//
 		printf("Jai ecrit : %s\n", line);
 		free(line);
 	}

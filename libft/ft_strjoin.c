@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+#include "../minishell.h"
 
 char	*ft_strjoin(const char *s1, const char *s2)
 {

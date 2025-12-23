@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+#include "../minishell.h"
 
 static char	**ft_free(char **arr)
 {

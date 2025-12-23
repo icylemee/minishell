@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/libft.h"
+#include "../minishell.h"
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {

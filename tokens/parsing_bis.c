@@ -16,6 +16,7 @@ char	*ft_fill_word_quote(char *line)
 {
 	char	*word;
 
+	word = NULL;
 	if (line[0] == SING_QUOTE_D)
 		word = ft_fill_word_which_q(line, word, SING_QUOTE_D);
 	if (line[0] == DOUB_QUOTE_D)

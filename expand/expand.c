@@ -62,6 +62,7 @@ int	ft_isalnum(int c)
 		return (0);
 	return (1);
 }
+
 int	ft_var_len(char *str)
 {
 	int	i;
@@ -116,7 +117,7 @@ char	*ft_fill_new_after_expand(t_token *token, t_env2 *env, int len)
 			j++;
 		}
 	}
-	new[j] = 0;
+	new[j] = '\0';
 	return (new);
 }
 
@@ -185,5 +186,44 @@ int	ft_expand_token(t_token	*token, t_env2	*env)
 	return (1);
 }
 
+int ft_expander(t_token **start, t_env2 *env)
+{
+	t_token *current;
+
+	current = *start;
+	while (current)
+	{
+		if (current->type == WORD && current->state != SINGLE_QUOTE_T
+			&& ft_is_dollar(current->content) == 1 && ft_check_prev_type(current) == 1)
+			{ 
+				if (ft_expand_token(current, env) == 0)
+					return (0);
+			}
+			current = current->next;
+	}
+	return (1);
+}
+
+int	ft_check_prev_type(t_token *token)
+{
+	if (token->prev == NULL)
+		return (1);
+	if (token->prev->type == HEREDOC)
+		return (0);
+	return (1);
+}
 
 
+int ft_is_dollar(char *content)
+{
+	int	i;
+
+	i = 0;
+	while (content[i])
+	{
+		if (content[i] == '$')
+			return (1);
+		i++;
+	}
+	return (0);
+}

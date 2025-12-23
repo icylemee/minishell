@@ -31,7 +31,7 @@ char	*ft_fill_word_which_q(char *line, char *word, int quote)
 	if (line[i] == 0)
 	{
 		// gerer le cas quand une quote ouverte nest pas fermee
-		return (ft_putendl_fd("syntax error: unclosed quote", stderr), NULL);
+		return (ft_putendl_fd("syntax error: unclosed quote", 0), NULL);
 	}
 	word = malloc(sizeof(char) * len + 3); // +2 pour la quote plus carac de fin et +1 pour la quote du debut quon a jump
 	if (!word)

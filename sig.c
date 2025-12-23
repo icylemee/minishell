@@ -11,8 +11,23 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 volatile sig_atomic_t	g_signal = 0;
+
+
+/*
+** Hack pour MacOS : Si la vraie readline ne marche pas,
+** on crée cette fonction vide pour que le linker arrête de pleurer.
+** Cela signifie juste que le CTRL-C n'effacera pas parfaitement la ligne,
+** mais le shell marchera !
+*/
+void rl_replace_line(const char *text, int clear_undo)
+{
+    (void)text;
+    (void)clear_undo;
+}
 
 void	handle_sigint(int sig)
 {
