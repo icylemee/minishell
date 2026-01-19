@@ -23,6 +23,7 @@ volatile sig_atomic_t	g_signal = 0;
 ** Cela signifie juste que le CTRL-C n'effacera pas parfaitement la ligne,
 ** mais le shell marchera !
 */
+
 void rl_replace_line(const char *text, int clear_undo)
 {
     (void)text;

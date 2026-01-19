@@ -155,6 +155,7 @@ char	*ft_strdup(const char *s);
 void	error_malloc(void);
 void	ft_putendl_fd(char *s, int fd);
 
+int	ft_remove_quote(t_token **token);
 
 
 #endif
